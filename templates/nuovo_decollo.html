@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+<h1 class="text-center my-2">
+{% if tmp_decollo["id"] == False %}
+Aggiungi Decollo
+{% else %}
+Modifica Decollo {{ tmp_decollo["id"] }}
+{% endif %}
+</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+	<div class="row">
+		<div class="col">
+			<div class="card border-dark mb-3" style="width: 50rem;">
+			  <div class="card-body">
+				<h5 class="card-title text-center">Formazione Decollo</h5>
+				  <ul class="list-group list-group-flush">
+					{% if tmp_decollo["tandem"] %}
+						{% for i in tmp_decollo["tandem"] %}
+						{% if i["video_ext"] %}
+							<li class="list-group-item">
+								<ul class="list-group list-group-flush">
+									<div class="container">
+										<div class="row">
+											<div class="col">
+												<span class="badge bg-primary">TANDEM</span>
+												<li class="list-group-item list-group-item-primary">{{ i["istruttore"][1] }}
+												{% if i["video_polso"] %}
+													<span class="badge bg-primary">VIDEO</span>
+												{% endif %}
+												</li>
+												<li class="list-group-item list-group-item-primary">{{ i["passeggero"] }}</li>
+												{% if i["video_ext"] %}
+													<li class="list-group-item list-group-item-primary">{{ i["videoman"][1] }}<span class="badge bg-primary">VIDEO</span>
+													{% if i["foto"] %}
+														<span class="badge bg-primary">FOTO</span>
+													{% endif %}
+													</li>
+												{% endif %}
+											</div>
+											<div class="col">
+												<a href="/modifica-decollo/modifica/tandem/{{ i["id"] }}" class="btn btn-outline-primary my-2">Modifica</a>
+												<a href="/modifica-decollo/elimina/tandem/{{ i["id"] }}" class="btn btn-outline-danger my-2">Elimina</a>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</li>
+						{% else %}
+							<li class="list-group-item">
+								<ul class="list-group list-group-flush">
+									<div class="container">
+										<div class="row">
+											<div class="col">
+												<span class="badge bg-primary">TANDEM</span>
+												<li class="list-group-item list-group-item-primary">{{ i["istruttore"][1] }}
+												{% if i["video_polso"] %}
+													<span class="badge bg-primary">VIDEO</span>
+												{% endif %}
+												{% if i["foto"] %}
+													<span class="badge bg-primary">FOTO</span>
+												{% endif %}
+												</li>
+												<li class="list-group-item list-group-item-primary">{{ i["passeggero"] }}</li>
+												{% if i["video_ext"] %}
+													<li class="list-group-item list-group-item-primary">{{ i["videoman"][1] }}<span class="badge bg-primary">VIDEO</span>
+													</li>
+												{% endif %}
+											</div>
+											<div class="col">
+												<a href="/modifica-decollo/modifica/tandem/{{ i["id"] }}" class="btn btn-outline-primary my-2">Modifica</a>
+												<a href="/modifica-decollo/elimina/tandem/{{ i["id"] }}" class="btn btn-outline-danger my-2">Elimina</a>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</li>
+						{% endif %}
+						{% endfor %}
+					{% endif %}
+					{% if tmp_decollo["aff"] %}
+						{% for i in tmp_decollo["aff"] %}
+							<li class="list-group-item">
+								<ul class="list-group list-group-flush">
+									<div class="container">
+										<div class="row">
+											<div class="col">
+												<span class="badge bg-warning">AFF {{ i["livello"] }}</span>
+												<li class="list-group-item list-group-item-warning">{{ i["istruttore1"][1] }}</li>
+												<li class="list-group-item list-group-item-warning">{{ i["allievo"] }}</li>
+												{% if i["livello"] == "1" or i["livello"] == "2" or i["livello"] == "3" %}
+													<li class="list-group-item list-group-item-warning">{{ i["istruttore2"][1] }}</li>
+												{% endif %}
+											</div>
+											<div class="col">
+												<a href="/modifica-decollo/modifica/aff/{{ i["id"] }}" class="btn btn-outline-primary my-2">Modifica</a>
+												<a href="/modifica-decollo/elimina/aff/{{ i["id"] }}" class="btn btn-outline-danger my-2">Elimina</a>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</li>
+						{% endfor %}
+					{% endif %}
+					{% if tmp_decollo["paracadutisti"] %}
+						{% for i in tmp_decollo["paracadutisti"] %}
+							<li class="list-group-item">
+								<ul class="list-group list-group-flush">
+									<div class="container">
+										<div class="row">
+											<div class="col">
+												<li class="list-group-item">{{ i["skydiver"][1] }}
+												{% if i["disciplina"] != "standard" %}
+													<span class="badge bg-primary">{{ i["disciplina"] }}</span>
+												{% endif %}
+												{% if i["noleggio"] %}
+													<span class="badge bg-primary">NOLEGGIO</span>
+												{% endif %}
+												</li>
+											</div>
+											<div class="col">
+												<a href="/modifica-decollo/modifica/paracadutisti/{{ i["id"] }}" class="btn btn-outline-primary my-2">Modifica</a>
+												<a href="/modifica-decollo/elimina/paracadutisti/{{ i["id"] }}" class="btn btn-outline-danger my-2">Elimina</a>
+											</div>
+										</div>
+									</div>
+								</ul>
+							</li>
+						{% endfor %}
+					{% endif %}
+				  </ul>
+			  </div>
+			</div>
+		</div>
+		<div class="col">
+			<a href="/modifica-decollo/modifica-tandem" class="btn btn-outline-primary my-2" style="width: 15rem;">Aggiungi Tandem</a>
+			<br>
+			<a href="/modifica-decollo/modifica-aff" class="btn btn-outline-primary my-2" style="width: 15rem;">Aggiungi AFF</a>
+			<br>
+			<a href="/modifica-decollo/modifica-skydiver" class="btn btn-outline-primary my-2" style="width: 15rem;">Aggiungi Paracadutista</a>
+			<br>
+			<br>
+			<br>
+			<a href="/annulla-decollo" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+			<a href="/conferma-decollo" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</a>
+		</div>
+	</div>
+	</div>
+{% endblock %}

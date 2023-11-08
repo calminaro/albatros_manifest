@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+<h1 class="text-center my-2">Login</h1>
+{% endblock %}
+
+{% block content %}
+<div class="container-sm m-5">
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <div class="form-check my-2">
+        <label class="form-label" for="skydiver">Username</label>
+        <input class="form-control" type="text" placeholder="username" name="username" id="username">
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="skydiver">Password</label>
+        <input class="form-control" type="password" placeholder="password" name="pw" id="pw">
+    </div>
+    <button type="submit" class="btn btn-primary my-2">Login</button>
+    </form>
+</div>
+</div>
+{% endblock %}

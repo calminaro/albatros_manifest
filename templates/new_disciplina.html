@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+{% if tmp %}
+<h1 class="text-center my-2">Modifica Disciplina</h1>
+{% else %}
+<h1 class="text-center my-2">Aggiungi Disciplina</h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if tmp %}
+<div class="container-sm m-5">
+    <form method="POST">
+    <div class="form-check my-2">
+        <label class="form-label" for="disciplina">Nome Disciplina</label>
+        <input class="form-control" type="text" value="{{ tmp["disciplina"] }}" placeholder="" name="disciplina" id="disciplina">
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="key">Badge</label>
+        <input class="form-control" type="text" value="{{ tmp["key"] }}" placeholder="" name="key" id="key">
+    </div>
+    <button type="submit" class="btn btn-primary my-2">CONFERMA</button>
+    </form>
+</div>
+{% else %}
+<div class="container-sm m-5">
+    <form method="POST">
+    <div class="form-check my-2">
+        <label class="form-label" for="disciplina">Nome Disciplina</label>
+        <input class="form-control" type="text" value="" placeholder="Inserire nome disciplina" name="disciplina" id="disciplina">
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="key">Badge</label>
+        <input class="form-control" type="text" value="" placeholder="Cosa comparirà nel badge" name="key" id="key">
+    </div>
+    <button type="submit" class="btn btn-primary my-2">CONFERMA</button>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+{% if tmp %}
+<h1 class="text-center my-2">Modifica AFF</h1>
+{% else %}
+<h1 class="text-center my-2">Aggiungi AFF</h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if tmp %}
+<div class="container-sm m-5">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <label class="form-label" for="livello">Livello AFF</label>
+    <select class="form-select my-2" aria-label="Livello" name="livello">
+        {% for i in ["1","2","3","4","5","6","7"] %}
+        {% if i == tmp["livello"] %}
+            <option selected value="{{ i }}">{{ i }}</option>
+        {% else %}
+            <option value="{{ i }}">{{ i }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore1">Jump Master 1</label>
+    <select class="form-select my-2" aria-label="Istruttore 1" name="istruttore1">
+        {% for i in decoded_staff %}
+        {% if i["aff"] == "true" %}
+        {% if i["nome"] == tmp["istruttore1"][1] %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if tmp["istruttore1"][0] %}
+            <option value="Altro">Altro</option>
+        {% else %}
+            <option selected value="Altro">Altro</option>
+        {% endif %}
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore1">Altro Istruttore</label>
+        {% if tmp["istruttore1"][0] %}
+            <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore1" id="altroIstruttore1">
+        {% else %}
+            <input class="form-control" type="text" value="{{ tmp["istruttore1"][1] }}" placeholder="" name="altroIstruttore1" id="altroIstruttore1">
+        {% endif %}
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="passeggero">Allievo</label>
+        <input class="form-control" type="text" value="{{ tmp["allievo"] }}" placeholder="Nome Allievo" name="allievo" id="allievo">
+    </div>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore2">Jump Master 2</label>
+    <select class="form-select my-2" aria-label="Istruttore 2" name="istruttore2">
+        {% for i in decoded_staff %}
+        {% if i["aff"] == "true" %}
+        {% if i["nome"] == tmp["istruttore2"][1] %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if tmp["istruttore2"][0] %}
+            <option value="Altro">Altro</option>
+        {% else %}
+            <option selected value="Altro">Altro</option>
+        {% endif %}
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore2">Altro Istruttore</label>
+        {% if tmp["istruttore1"][0] %}
+            <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore2" id="altroIstruttore2">
+        {% else %}
+            <input class="form-control" type="text" value="{{ tmp["istruttore2"][1] }}" placeholder="" name="altroIstruttore2" id="altroIstruttore2">
+        {% endif %}
+    </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="/modifica-decollo" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+{% else %}
+<div class="container-sm m-5">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <label class="form-label" for="livello">Livello AFF</label>
+    <select class="form-select my-2" aria-label="Livello" name="livello">
+        {% for i in [1,2,3,4,5,6,7] %}
+        <option value="{{ i }}">{{ i }}</option>
+        {% endfor %}
+    </select>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore1">Jump Master 1</label>
+    <select class="form-select my-2" aria-label="Istruttore 1" name="istruttore1">
+        {% for i in decoded_staff %}
+        {% if i["aff"] == "true" %}
+        {% if i["nome"] == "Ago" %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <option value="Altro">Altro</option>
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore1">Altro Istruttore</label>
+        <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore1" id="altroIstruttore1">
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="passeggero">Allievo</label>
+        <input class="form-control" type="text" placeholder="Nome Allievo" name="allievo" id="allievo">
+    </div>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore2">Jump Master 2</label>
+    <select class="form-select my-2" aria-label="Istruttore 2" name="istruttore2">
+        {% for i in decoded_staff %}
+        {% if i["aff"] == "true" %}
+        {% if i["nome"] == "Cini" %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <option value="Altro">Altro</option>
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore2">Altro Istruttore</label>
+        <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore2" id="altroIstruttore2">
+    </div>
+    </div>
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="/modifica-decollo" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

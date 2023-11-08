@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+{% if tmp %}
+<h1 class="text-center my-2">Modifica Paracadutista</h1>
+{% else %}
+<h1 class="text-center my-2">Aggiungi Paracadutista</h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if tmp %}
+<div class="container-sm m-5">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <div class="form-check my-2">
+        <div class="row">
+        <div class="col">
+        <label class="form-label" for="skydiver">Paracadutista</label>
+        <select class="form-select my-2" aria-label="skydiver" name="skydiver">
+            {% for i in decoded_skydiver %}
+            {% if i["nome"] == tmp["skydiver"][1] %}
+                <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+            {% else %}
+                <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+            {% endif %}
+            {% endfor %}
+            {% if tmp["skydiver"][0] %}
+            <option value="Altro">Altro</option>
+        {% else %}
+            <option selected value="Altro">Altro</option>
+        {% endif %}
+        </select>
+        </div>
+        <div class="col">
+        <div class="form-check my-2">
+            <label class="form-label" for="altroskydiver">Altro Paracadutista</label>
+            {% if tmp["skydiver"][0] %}
+                <input class="form-control" type="text" value="" placeholder="" name="altroskydiver" id="altroskydiver">
+            {% else %}
+                <input class="form-control" type="text" value="{{ tmp["skydiver"][1] }}" placeholder="" name="altroskydiver" id="altroskydiver">
+            {% endif %}
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="tipo_lancio">Paracadutista</label>
+        <select class="form-select my-2" aria-label="tipo_lancio" name="tipo_lancio">
+            {% for i in decoded_disciplina %}
+            {% if i["key"] == tmp["disciplina"] %}
+                <option selected value="{{ i["key"] }}">{{ i["nome"] }}</option>
+            {% else %}
+                <option value="{{ i["key"] }}">{{ i["nome"] }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-check my-2">
+        {% if tmp["noleggio"] %}
+        <input class="form-check-input" type="checkbox" value="true" name="noleggio" id="noleggio" checked>
+        <label class="form-check-label" for="noleggio">Noleggio materiale</label>
+        {% else %}
+        <input class="form-check-input" type="checkbox" value="true" name="noleggio" id="noleggio">
+        <label class="form-check-label" for="noleggio">Noleggio materiale</label>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="{{ url_for("nuovo_decollo") }}" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+{% else %}
+<div class="container-sm m-5">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <div class="form-check my-2">
+        <div class="row">
+        <div class="col">
+        <label class="form-label" for="skydiver">Paracadutista</label>
+        <select class="form-select my-2" aria-label="skydiver" name="skydiver">
+            {% for i in decoded_skydiver %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+            {% endfor %}
+            <option value="Altro">Altro</option>
+        </select>
+        </div>
+        <div class="col">
+        <div class="form-check my-2">
+            <label class="form-label" for="altroskydiver">Altro Paracadutista</label>
+            <input class="form-control" type="text" value="" placeholder="" name="altroskydiver" id="altroskydiver">
+        </div>
+        </div>
+        </div>
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="tipo_lancio">Paracadutista</label>
+        <select class="form-select my-2" aria-label="tipo_lancio" name="tipo_lancio">
+            {% for i in decoded_disciplina %}
+            <option value="{{ i["key"] }}">{{ i["nome"] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-check my-2">
+        <input class="form-check-input" type="checkbox" value="true" name="noleggio" id="noleggio">
+        <label class="form-check-label" for="noleggio">Noleggio materiale</label>
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="{{ url_for("nuovo_decollo") }}" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

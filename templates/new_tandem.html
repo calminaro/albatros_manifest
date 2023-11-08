@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+{% if tmp %}
+<h1 class="text-center my-2">Modifica Tandem</h1>
+{% else %}
+<h1 class="text-center my-2">Aggiungi Tandem</h1>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+<div class="row">
+{% if tmp %}
+<div class="container-sm">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore">Istruttore</label>
+    <select class="form-select" aria-label="Istruttore Tandem" name="istruttore">
+        {% for i in decoded_staff %}
+        {% if i["tandem"] == "true" %}
+        {% if i["nome"] == tmp["istruttore"][1] %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% if tmp["istruttore"][0] %}
+            <option value="Altro">Altro</option>
+        {% else %}
+            <option selected value="Altro">Altro</option>
+        {% endif %}
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore">Altro Istruttore</label>
+        {% if tmp["istruttore"][0] %}
+            <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore" id="altroIstruttore">
+        {% else %}
+            <input class="form-control" type="text" value="{{ tmp["istruttore"][1] }}" placeholder="" name="altroIstruttore" id="altroIstruttore">
+        {% endif %}
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        {% if tmp["video_polso"] %}
+        <input class="form-check-input" type="checkbox" value="true" name="video-polso" id="video_polso" checked>
+        <label class="form-check-label" for="video_polso">
+            Video da polso
+        </label>
+        {% else %}
+        <input class="form-check-input" type="checkbox" value="true" name="video-polso" id="video_polso">
+        <label class="form-check-label" for="video_polso">
+            Video da polso
+        </label>
+        {% endif %}
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="passeggero">Passeggero</label>
+        <input class="form-control" type="text" value="{{ tmp["passeggero"] }}" placeholder="Nome Passeggero Tandem" name="passeggero" id="passeggero">
+    </div>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="videoman">Video Man</label>
+    <select class="form-select my-2" aria-label="VideoMan" name="videoman">
+        <option selected value="no-video">No Video esterno</option>
+        {% for i in decoded_staff %}
+        {% if i["videoman"] == "true" %}
+        {% if i["nome"] == tmp["videoman"][1] %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <option value="Altro">Altro</option>
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroVideo">Altro VideoMan</label>
+        {% if tmp["videoman"][0] %}
+            <input class="form-control" type="text" value="" placeholder="" name="altroVideo" id="altroVideo">
+        {% else %}
+            <input class="form-control" type="text" value="{{ tmp["videoman"][1] }}" placeholder="" name="altroVideo" id="altroVideo">
+        {% endif %}
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        {% if tmp["foto"] %}
+        <input class="form-check-input" type="checkbox" value="true" name="foto" id="foto" checked>
+        <label class="form-check-label" for="foto">
+            Foto
+        </label>
+        {% else %}
+        <input class="form-check-input" type="checkbox" value="true" name="foto" id="foto">
+        <label class="form-check-label" for="foto">
+            Foto
+        </label>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="{{ url_for("nuovo_decollo") }}" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+{% else %}
+<div class="container-sm">
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST">
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="istruttore">Istruttore</label>
+    <select class="form-select my-2" aria-label="Istruttore Tandem" name="istruttore">
+        {% for i in decoded_staff %}
+        {% if i["tandem"] == "true" %}
+        {% if i["nome"] == "Ago" %}
+            <option selected value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% else %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <option value="Altro">Altro</option>
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroIstruttore">Altro Istruttore</label>
+        <input class="form-control" type="text" value="" placeholder="" name="altroIstruttore" id="altroIstruttore">
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        <input class="form-check-input" type="checkbox" value="true" name="video-polso" id="video_polso">
+        <label class="form-check-label" for="video_polso">
+            Video da polso
+        </label>
+    </div>
+    <div class="form-check my-2">
+        <label class="form-label" for="passeggero">Passeggero</label>
+        <input class="form-control" type="text" placeholder="Nome Passeggero Tandem" name="passeggero" id="passeggero">
+    </div>
+    <div class="row">
+    <div class="col">
+    <label class="form-label" for="videoman">Video Man</label>
+    <select class="form-select my-2" aria-label="VideoMan" name="videoman">
+        <option selected value="no-video">No Video esterno</option>
+        {% for i in decoded_staff %}
+        {% if i["videoman"] == "true" %}
+            <option value="{{ i["nome"] }}">{{ i["nome"] }}</option>
+        {% endif %}
+        {% endfor %}
+        <option value="Altro">Altro</option>
+    </select>
+    </div>
+    <div class="col">
+    <div class="form-check my-2">
+        <label class="form-label" for="altroVideo">Altro VideoMan</label>
+        <input class="form-control" type="text" value="" placeholder="" name="altroVideo" id="altroVideo">
+    </div>
+    </div>
+    </div>
+    <div class="form-check my-2">
+        <input class="form-check-input" type="checkbox" value="true" name="foto" id="foto">
+        <label class="form-check-label" for="foto">
+            Foto
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary my-2" style="width: 15rem;">CONFERMA</button>
+    <a href="{{ url_for("nuovo_decollo") }}" class="btn btn-danger my-2" style="width: 15rem;">ANNULLA</a>
+    </form>
+    </div>
+</div>
+</div>
+</div>
+{% endif %}
+{% endblock %}

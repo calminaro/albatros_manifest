@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block titolo %}
+<h1 class="text-center my-2">Pannello di Controllo</h1>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link active" href="{{ url_for("admin_staff") }}">Staff</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="{{ url_for("admin_skydiver") }}">Paracadutisti</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="{{ url_for("admin_discipline") }}">Discipline</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="{{ url_for("admin_giornate") }}">Giornate di attività</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#">Utenti</a>
+		</li>
+		</ul>
+		<div class="row">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nome</th>
+						<th scope="col">Istruttore Tandem</th>
+						<th scope="col">Istruttore AFF</th>
+						<th scope="col">Videoman</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in decoded_staff %}
+					<tr>
+					<th scope="row"></th>
+					<td>{{ i["nome"] }}</td>
+					{% if i["tandem"] == "true" %}
+						<td><span class="material-symbols-outlined">done</span></td>
+					{% else %}
+						<td></td>
+					{% endif %}
+					{% if i["aff"] == "true" %}
+						<td><span class="material-symbols-outlined">done</span></td>
+					{% else %}
+						<td></td>
+					{% endif %}
+					{% if i["videoman"] == "true" %}
+						<td><span class="material-symbols-outlined">done</span></td>
+					{% else %}
+						<td></td>
+					{% endif %}
+						<td><a href="#" class="btn btn-outline-secondary btn-sm my-2"><span class="material-symbols-outlined">edit</span></a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<a href="#" class="btn btn-outline-primary btn-sm mx-2">Aggiungi <span class="material-symbols-outlined">add</span></a>
+		</div>
+	</div>
+{% endblock %}

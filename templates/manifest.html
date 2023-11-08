@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="it-IT">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <title>Manifest Albatros</title>
+  </head>
+  <body>
+	<div class="shadow p-2 mb-3 bg-body rounded">
+        <h1 class="text-center my-2"><strong>Manifest del {{ data[8:10] }}/{{ data[5:7] }}/{{ data[0:4] }}</strong></h1>
+    </div>
+	<div class="container-xxl border-dark my-2">
+		<div class="row">
+		    {% for decollo in decoded_decolli if decollo["num_decollo"] == num_volo %}
+			<div class="card border-dark mb-3 mx-2" style="width: 20rem;">
+			<div class="card-body">
+				<h5 class="card-title">In volo Decollo {{ decollo["num_decollo"] }}</h5>
+				<div class="row">
+				  <ul class="list-group list-group-flush">
+					{% for tandem in decollo["tandem"] %}
+					<li class="list-group-item">
+						<ul class="list-group list-group-flush">
+							<span class="badge bg-secondary">TANDEM</span>
+							<li class="list-group-item list-group-item-secondary">{{ tandem["istruttore"][1] }}
+							{% if tandem["video_polso"] %}
+								<span class="badge bg-secondary">VIDEO</span>
+							{% endif %}
+							{% if tandem["video_ext"] == False %}
+								{% if tandem["foto"] %}
+									<span class="badge bg-secondary">FOTO</span>
+								{% endif %}
+							{% endif %}
+							</li>
+							<li class="list-group-item list-group-item-secondary">{{ tandem["passeggero"] }}</li>
+							{% if tandem["video_ext"] %}
+								<li class="list-group-item list-group-item-secondary">{{ tandem["videoman"][1] }}
+								<span class="badge bg-secondary">VIDEO</span>
+								{% if tandem["foto"] %}
+									<span class="badge bg-secondary">FOTO</span>
+								{% endif %}
+								</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% endfor %}
+					{% for aff in decollo["aff"] %}
+					<li class="list-group-item">
+						<ul class="list-group list-group-flush">
+							<span class="badge bg-secondary">AFF Liv.{{ aff["livello"] }}</span>
+							<li class="list-group-item list-group-item-secondary">{{ aff["istruttore1"][1] }}</li>
+							<li class="list-group-item list-group-item-secondary">{{ aff["allievo"] }}</li>
+							{% if aff["livello"] == "1" or aff["livello"] == "2" or aff["livello"] == "3" %}
+								<li class="list-group-item list-group-item-secondary">{{ aff["istruttore2"][1] }}</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% endfor %}
+					{% for skydiver in decollo["paracadutisti"] %}
+						<li class="list-group-item">{{ skydiver["skydiver"][1] }}
+							{% if skydiver["disciplina"] != "standard" %}
+								<span class="badge bg-secondary">{{ skydiver["disciplina"] }}</span>
+							{% endif %}
+							{% if skydiver["noleggio"] %}
+								<span class="badge bg-secondary">NOLEGGIO</span>
+							{% endif %}
+						</li>
+					{% endfor %}
+				  </ul>
+				</div>
+				<div class="row">
+				{% if decollo["rifornimento"] == "true" %}
+					<span class="badge rounded-pill bg-secondary"><span class="material-symbols-outlined">local_gas_station</span></span>
+				{% endif %}
+				</div>
+			  </div>
+			</div>
+
+			{% endfor %}
+			{% for decollo in decoded_decolli if decollo["stato"] != "fatto" %}
+			<div class="card border-dark mb-3 mx-2" style="width: 20rem;">
+			<div class="card-body">
+			    {% if decollo["stato"] == "prossimo" %}
+				<h5 class="card-title">Prossimo Decollo {{ decollo["num_decollo"] }}</h5>
+    			{% else %}
+    			    <h5 class="card-title">Decollo {{ decollo["num_decollo"] }}</h5>
+    			{% endif %}
+				<div class="row">
+				  <ul class="list-group list-group-flush">
+					{% for tandem in decollo["tandem"] %}
+					<li class="list-group-item">
+						<ul class="list-group list-group-flush">
+							<span class="badge bg-primary">TANDEM</span>
+							<li class="list-group-item list-group-item-primary">{{ tandem["istruttore"][1] }}
+							{% if tandem["video_polso"] %}
+								<span class="badge bg-primary">VIDEO</span>
+							{% endif %}
+							{% if tandem["video_ext"] == False %}
+								{% if tandem["foto"] %}
+									<span class="badge bg-primary">FOTO</span>
+								{% endif %}
+							{% endif %}
+							</li>
+							<li class="list-group-item list-group-item-primary">{{ tandem["passeggero"] }}</li>
+							{% if tandem["video_ext"] %}
+								<li class="list-group-item list-group-item-primary">{{ tandem["videoman"][1] }}
+								<span class="badge bg-primary">VIDEO</span>
+								{% if tandem["foto"] %}
+									<span class="badge bg-primary">FOTO</span>
+								{% endif %}
+								</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% endfor %}
+					{% for aff in decollo["aff"] %}
+					<li class="list-group-item">
+						<ul class="list-group list-group-flush">
+							<span class="badge bg-warning">AFF Liv.{{ aff["livello"] }}</span>
+							<li class="list-group-item list-group-item-warning">{{ aff["istruttore1"][1] }}</li>
+							<li class="list-group-item list-group-item-warning">{{ aff["allievo"] }}</li>
+							{% if aff["livello"] == "1" or aff["livello"] == "2" or aff["livello"] == "3" %}
+								<li class="list-group-item list-group-item-warning">{{ aff["istruttore2"][1] }}</li>
+							{% endif %}
+						</ul>
+					</li>
+					{% endfor %}
+					{% for skydiver in decollo["paracadutisti"] %}
+						<li class="list-group-item">{{ skydiver["skydiver"][1] }}
+							{% if skydiver["disciplina"] != "standard" %}
+								<span class="badge bg-primary">{{ skydiver["disciplina"] }}</span>
+							{% endif %}
+							{% if skydiver["noleggio"] %}
+								<span class="badge bg-primary">NOLEGGIO</span>
+							{% endif %}
+						</li>
+					{% endfor %}
+				  </ul>
+				</div>
+				<div class="row">
+				{% if decollo["rifornimento"] == "true" %}
+					<span class="badge rounded-pill bg-warning"><span class="material-symbols-outlined">local_gas_station</span></span>
+				{% endif %}
+				</div>
+			  </div>
+			</div>
+
+			{% endfor %}
+		</div>
+	</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  </body>
+</html>
