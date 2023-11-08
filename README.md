@@ -26,3 +26,9 @@ Attualmente in sviluppo una **nuova versione**, riscritta da zero, che sarà dis
   - istruttore Tandem
 - generazione automatica del registro scuola come richiesto da ENAC,
 - API per connettere a servizi esterni.
+
+---
+
+Repository creato solo come archivio del test.
+
+**Nuova versione in sviluppo, presto disponibile!**
