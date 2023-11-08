@@ -10,7 +10,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] =  "sqlite:///users.db"
-app.config['SECRET_KEY'] = "47e4e31fe7e2638c1048e76683a6dcaedc75764192cf28868ed8dcccbb028891"
+app.config['SECRET_KEY'] = "SECRET_KEY"
 
 db = SQLAlchemy(app)
 
